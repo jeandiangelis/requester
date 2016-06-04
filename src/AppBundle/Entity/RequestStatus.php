@@ -40,20 +40,6 @@ class RequestStatus
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return RequestStatus
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
      * Get description
      *
      * @return string

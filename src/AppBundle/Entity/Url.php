@@ -58,20 +58,6 @@ class Url
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Url
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
      * Get name
      *
      * @return string
@@ -82,20 +68,6 @@ class Url
     }
 
     /**
-     * Set batch
-     *
-     * @param integer $batch
-     *
-     * @return Url
-     */
-    public function setBatch($batch)
-    {
-        $this->batch = $batch;
-
-        return $this;
-    }
-
-    /**
      * Get batch
      *
      * @return int
@@ -103,20 +75,6 @@ class Url
     public function getBatch()
     {
         return $this->batch;
-    }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     *
-     * @return Url
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
     }
 
     /**
