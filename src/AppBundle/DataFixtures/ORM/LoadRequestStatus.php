@@ -19,6 +19,6 @@ class LoadRequestStatus implements FixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $okStatus = new RequestStatus();
+        $okStatus = new RequestStatus(200);
     }
 }

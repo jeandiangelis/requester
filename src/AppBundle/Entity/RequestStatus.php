@@ -22,19 +22,27 @@ class RequestStatus
     private $id;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="description", type="string", length=255, unique=true)
+     * @ORM\Column(name="code", type="integer", nullable=false)
      */
-    private $description;
+    private $code;
+
+    /**
+     * @return int
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
 
     /**
      * RequestStatus constructor.
-     * @param string $description
+     * @param int $code
      */
-    public function __construct($description)
+    public function __construct($code)
     {
-        $this->description = $description;
+        $this->code = $code;
     }
 
     /**
@@ -46,15 +54,6 @@ class RequestStatus
     {
         return $this->id;
     }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 }
+
 
