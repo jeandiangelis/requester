@@ -54,7 +54,8 @@ var Url = React.createClass({
         return (
             <div className="url">
                 <a href="#"> {this.props.name}</a>
-                <p>{this.props.status.code}</p>
+                <p>Status {this.props.status.code}</p>
+                <p>Batch {this.props.batch}</p>
             </div>
         );
     }
@@ -64,7 +65,7 @@ var UrlList = React.createClass({
     render: function() {
         var urlNode = this.props.data.map(function(url) {
             return (
-                <Url name={url.name} key={url.id} status={url.status}>
+                <Url name={url.name} key={url.id} status={url.status} batch={url.batch}>
 
                 </Url>
             );
