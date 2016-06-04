@@ -19,11 +19,6 @@ var UrlBox = React.createClass({
     },
     
     handleUrlsSubmit: function(url) {
-        // var urls = this.state.data;
-        alert(url);
-        // url.id = Date.now();
-        // var newUrls = urls.concat([url]);
-        // this.setState({data: newUrls});
 
         $.ajax({
             url: this.props.url,
@@ -89,22 +84,26 @@ var UrlList = React.createClass({
 
 var UrlForm = React.createClass({
 
-    // getInitialState: function() {
-    //     return {name: '', status: ''};
-    // },
+    getInitialState: function() {
+        return {author: '', text: '', urls: ''};
+    },
 
     handleSubmit: function(e) {
         e.preventDefault();
 
         var urls = this.state.urls;
 
-        alert(urls);
         if (!urls) {
             return;
         }
 
-        this.props.onUrlsSubmit({name: name});
-        this.setState({name: '', status: ''});
+        this.props.onUrlsSubmit({urls: urls});
+        this.setState({urls: ''});
+        this.clearTextArea(document.getElementById('urls'));
+    },
+
+    clearTextArea: function(e) {
+        e.value = "";
     },
 
     handleUrlsChange: function(e) {
