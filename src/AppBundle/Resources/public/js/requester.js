@@ -1,9 +1,14 @@
+var data = [
+    {id: 1, name: "www.google.com.br", status: "OK"},
+    {id: 2, name: "www.facebook.com", status: "OK"}
+];
+
 var UrlBox = React.createClass({
     render: function() {
         return (
             <div className="urlBox">
                 <h1>Requester</h1>
-                <UrlList />
+                <UrlList data={this.props.data} />
                 <UrlForm />
             </div>
         );
@@ -12,12 +17,11 @@ var UrlBox = React.createClass({
 
 var Url = React.createClass({
     render: function() {
+        var md = new Remarkable();
         return (
             <div className="url">
-                <div className="urlName">
-                    {this.props.name}
-                </div>
-                {this.props.children}
+                <a href="#"> {this.props.name}</a>
+                <p>{this.props.children}</p>
             </div>
         );
     }
@@ -25,10 +29,16 @@ var Url = React.createClass({
 
 var UrlList = React.createClass({
     render: function() {
+        var urlNode = this.props.data.map(function(url) {
+            return (
+                <Url name={url.name} key={url.id}>
+                    {url.status}
+                </Url>
+            );
+        });
         return (
             <div className="urlList">
-                <Url name="www.google.com.br">This is one Url</Url>
-                <Url name="www.facebook.com">This is *another* url</Url>
+                {urlNode}
             </div>
         );
     }
@@ -37,15 +47,16 @@ var UrlList = React.createClass({
 var UrlForm = React.createClass({
     render: function() {
         return (
-            <div className="urlForm">
-                Hello, world! I am a CommentForm.
-            </div>
+            <form className="urlForm">
+                <textarea name="urls" id="urls" cols="30" rows="10"></textarea>
+                <input type="submit" value="Send requests" />
+            </form>
         );
     }
 });
 
 ReactDOM.render(
-    <UrlBox />,
+    <UrlBox data={data} />,
     document.getElementById('content')
 );
 // var Comment = React.createClass({
