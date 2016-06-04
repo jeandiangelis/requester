@@ -22,19 +22,11 @@ class RequestStatus
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="code", type="integer", nullable=false)
      */
     private $code;
-
-    /**
-     * @return int
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
 
     /**
      * RequestStatus constructor.

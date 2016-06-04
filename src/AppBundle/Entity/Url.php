@@ -51,13 +51,13 @@ class Url
      * Url constructor.
      * @param string $name
      * @param int $batch
-     * @param string $statusCode
+     * @param RequestStatus $statusCode
      */
-    public function __construct($name, $batch, $statusCode)
+    public function __construct($name, $batch, RequestStatus $statusCode)
     {
         $this->name = $name;
         $this->batch = $batch;
-        $this->status = new RequestStatus($statusCode);
+        $this->status = $statusCode;
     }
 
     /**

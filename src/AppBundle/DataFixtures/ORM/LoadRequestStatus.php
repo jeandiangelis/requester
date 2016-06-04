@@ -20,5 +20,13 @@ class LoadRequestStatus implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $okStatus = new RequestStatus(200);
+        $notFound = new RequestStatus(404);
+        $error = new RequestStatus(500);
+
+        $manager->persist($okStatus);
+        $manager->persist($notFound);
+        $manager->persist($error);
+        
+        $manager->flush();
     }
 }
