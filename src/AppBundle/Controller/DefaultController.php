@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Url;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,23 +25,14 @@ class DefaultController extends Controller
      */
     public function getUrls(Request $request)
     {
-        $data = [
-            [
-                'id' => 123,
-                'name' => 'www.google.com',
-                'status' => 'ok'
-            ],
-            [
-                'id' => 1233,
-                'name' => 'www.google.com.br',
-                'status' => 'erro'
-            ],
-            [
-                'id' => 233,
-                'name' => 'www.google.com.br',
-                'status' => 'sdasdasdasdasda'
-            ],
-        ];
+        $data = $this
+            ->get('doctrine')
+            ->getRepository(Url::class)
+            ->findAll()
+        ;
+        $a = $this->get('serializer')->serialize($data, 'JSON');
+
+        dump($a);exit;
         return new JsonResponse($data);
     }
 

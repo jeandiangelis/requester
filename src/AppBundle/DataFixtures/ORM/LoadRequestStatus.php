@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\RequestStatus;
+use AppBundle\Entity\Url;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -26,7 +27,10 @@ class LoadRequestStatus implements FixtureInterface
         $manager->persist($okStatus);
         $manager->persist($notFound);
         $manager->persist($error);
-        
+
+        $a = new Url('www.google.com.br', 1, $okStatus);
+
+        $manager->persist($a);
         $manager->flush();
     }
 }

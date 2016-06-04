@@ -46,6 +46,13 @@ class RequestStatus
     {
         return $this->id;
     }
-}
 
+    /**
+     * @return int
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+}
 
