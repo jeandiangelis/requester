@@ -41,7 +41,7 @@ class Url
     private $batch;
 
     /**
-     * @var string
+     * @var RequestStatus
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\RequestStatus")
      */
@@ -93,11 +93,19 @@ class Url
     /**
      * Get status
      *
-     * @return string
+     * @return RequestStatus
      */
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @param RequestStatus $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 }
 

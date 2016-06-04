@@ -18,7 +18,7 @@ class UrlRepository extends \Doctrine\ORM\EntityRepository
         return $this
             ->getEntityManager()
             ->createQuery('SELECT u FROM AppBundle:Url u ORDER BY u.batch')
-            ->getOneOrNullResult()
+            ->getFirstResult()
         ;
     }
 }
