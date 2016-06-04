@@ -29,6 +29,15 @@ class RequestStatus
     private $description;
 
     /**
+     * RequestStatus constructor.
+     * @param string $description
+     */
+    public function __construct($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
      * Get id
      *
      * @return int

@@ -48,6 +48,19 @@ class Url
     private $status;
 
     /**
+     * Url constructor.
+     * @param string $name
+     * @param int $batch
+     * @param string $status
+     */
+    public function __construct($name, $batch, $status)
+    {
+        $this->name = $name;
+        $this->batch = $batch;
+        $this->status = new RequestStatus($status);
+    }
+
+    /**
      * Get id
      *
      * @return int
