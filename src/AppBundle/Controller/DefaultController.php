@@ -2,12 +2,14 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\RequestStatus;
 use AppBundle\Entity\Url;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -41,7 +43,33 @@ class DefaultController extends Controller
      */
     public function saveUrls(Request $request)
     {
-        dump($request);exit;
-        return new JsonResponse($data);
+        $urls = explode("\n", $request->get('urls'));
+
+        $doctrine = $this->getDoctrine();
+
+        $status = $doctrine
+            ->getRepository(RequestStatus::class)
+            ->findOneBy(['code' => RequestStatus::LOADING]);
+
+        /** @var Url $lastBatchUrl */
+        $lastBatchUrl = $doctrine
+            ->getRepository(Url::class)
+            ->getLastBatch()
+        ;
+
+        $nextBatch = 1;
+
+        if ($lastBatchUrl) {
+            $nextBatch = $lastBatchUrl->getBatch() + 1;
+        }
+
+        foreach ($urls as $url) {
+            $entity = new Url($url, $nextBatch, $status);
+            $doctrine->getEntityManager()->persist($entity);
+        }
+
+        $doctrine->getEntityManager()->flush();
+        
+        return new Response();
     }
 }

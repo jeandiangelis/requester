@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class RequestStatus
 {
     /**
+     * Loading status
+     */
+    const LOADING = -1;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")

@@ -23,14 +23,13 @@ class LoadRequestStatus implements FixtureInterface
         $okStatus = new RequestStatus(200);
         $notFound = new RequestStatus(404);
         $error = new RequestStatus(500);
+        $loading = new RequestStatus(-1);
 
         $manager->persist($okStatus);
         $manager->persist($notFound);
         $manager->persist($error);
+        $manager->persist($loading);
 
-        $a = new Url('www.google.com.br', 1, $okStatus);
-
-        $manager->persist($a);
         $manager->flush();
     }
 }
