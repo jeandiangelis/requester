@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * RequestStatus
  *
  * @ORM\Table(name="request_status")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RequestStatusRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RequestStatusRepository", readOnly=true)
  */
 class RequestStatus
 {
