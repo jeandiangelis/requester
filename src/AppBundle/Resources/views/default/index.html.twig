@@ -1,24 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="content"></div>
+    <div id="content">
+
+    </div>
 
     {% block stylesheets %}
         {{ parent() }}
 
         <script type="text/babel" src="{{ asset('bundles/app/js/requester.js') }}"></script>
-        <script type="text/babel">
-            // To get started with this tutorial running your own code, simply remove
-            // the script tag loading scripts/example.js and start writing code here.
-        </script>
     {% endblock %}
 
+   {#<form method="POST" action="{{ path('load') }}">#}
+      {#<label for="urls">Insert urls:</label>#}
+      {#<textarea name="urls" id="urls" cols="30" rows="10">#}
+      {#</textarea>#}
 
-   <form method="POST" action="{{ path('load') }}">
-      <label for="urls">Insert urls:</label>
-      <textarea name="urls" id="urls" cols="30" rows="10">
-      </textarea>
-
-       <input type="submit" value="Submit">
-   </form>
+       {#<input type="submit" value="Submit">#}
+   {#</form>#}
 {% endblock %}
