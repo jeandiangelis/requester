@@ -30,10 +30,9 @@ class DefaultController extends Controller
             ->getRepository(Url::class)
             ->findAll()
         ;
-        $a = $this->get('serializer')->serialize($data, 'JSON');
+        $json = $this->get('jms_serializer')->serialize($data, 'json');
 
-        dump($a);exit;
-        return new JsonResponse($data);
+        return new JsonResponse($json, 200, [], true);
     }
 
     /**

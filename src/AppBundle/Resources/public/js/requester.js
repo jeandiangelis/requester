@@ -54,7 +54,7 @@ var Url = React.createClass({
         return (
             <div className="url">
                 <a href="#"> {this.props.name}</a>
-                <p>{this.props.status}</p>
+                <p>{this.props.status.code}</p>
             </div>
         );
     }
