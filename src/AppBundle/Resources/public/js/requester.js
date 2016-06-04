@@ -1,8 +1,3 @@
-// var data = [
-//     {id: 1, name: "www.google.com.br", status: "OK"},
-//     {id: 2, name: "www.facebook.com", status: "OK"}
-// ];
-
 var UrlBox = React.createClass({
     loadUrlsFromServer: function() {
         $.ajax({
