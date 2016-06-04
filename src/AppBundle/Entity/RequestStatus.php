@@ -28,6 +28,20 @@ class RequestStatus
      */
     private $description;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="class", type="string", length=255)
+     */
+    private $class;
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
 
     /**
      * Get id
