@@ -5,9 +5,8 @@
 
     </div>
 
-    {% block stylesheets %}
+    {% block javascripts %}
         {{ parent() }}
-
         <script type="text/babel" src="{{ asset('bundles/app/js/requester.js') }}"></script>
     {% endblock %}
 {% endblock %}

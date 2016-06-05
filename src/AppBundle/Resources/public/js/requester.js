@@ -14,6 +14,20 @@ var UrlBox = React.createClass({
     },
     
     handleUrlsSubmit: function(url) {
+        var urls = this.state.data;
+        var newUrls = url.urls.split("\n");
+
+        for (var i = 0; i < newUrls.length; i++) {
+            newUrls[i] = {
+                'name': newUrls[i],
+                'id': Date.now(),
+                'status': -1
+            };
+        }
+        var state = urls.concat(newUrls);
+
+        this.setState({data: state});
+
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -60,9 +74,8 @@ var Url = React.createClass({
 
         return (
             <div className="url">
-                <a href="#"> {this.props.name}</a>
-                <p>Status: {status[this.props.status]}</p>
-                <p>Batch {this.props.batch}</p>
+                <a href="#"> {this.props.data.name}</a>
+                <p>Status: {status[this.props.data.status]}</p>
             </div>
         );
     }
@@ -70,16 +83,11 @@ var Url = React.createClass({
 
 var UrlList = React.createClass({
     render: function() {
-        var urlNode = this.props.data.map(function(url) {
-            return (
-                <Url name={url.name} key={url.id} status={url.status} batch={url.batch}>
-
-                </Url>
-            );
-        });
         return (
             <div className="urlList">
-                {urlNode}
+                {this.props.data.map(function (url) {
+                    return  <Url data={url}/>
+                })}
             </div>
         );
     }
@@ -131,6 +139,6 @@ var UrlForm = React.createClass({
 });
 
 ReactDOM.render(
-    <UrlBox url="api/urls" interval={1000} />,
+    <UrlBox url="api/urls" interval={2000} />,
     document.getElementById('content')
 );

@@ -31,6 +31,18 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/test/{slug}", name="pagina")
+     */
+    public function testAction(Request $request)
+    {
+        $time = random_int(1, 10);
+        echo $time;
+        sleep($time);
+
+        return new Response('troxa');
+    }
+
+    /**
      * @Route("/api/urls", name="urls")
      * @Method(methods={"GET"})
      */
@@ -95,8 +107,6 @@ class DefaultController extends Controller
                 }
             );
         }
-
-        $doctrine->getEntityManager()->flush();
 
         return new Response();
     }
