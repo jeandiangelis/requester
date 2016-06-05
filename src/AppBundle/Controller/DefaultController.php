@@ -5,12 +5,17 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\RequestStatus;
 use AppBundle\Entity\Url;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\TransferStats;
+use Psr\Http\Message\ResponseInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Process\Process;
 
 class DefaultController extends Controller
 {

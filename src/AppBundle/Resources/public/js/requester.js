@@ -51,10 +51,21 @@ var UrlBox = React.createClass({
 
 var Url = React.createClass({
     render: function() {
+        var status = {
+            '-1': 'Still working',
+            '200': '200 OK',
+            '301': 'Redirected',
+            '404': 'Not found',
+            '500': 'Server error',
+        };
+
+        if (this.props.status.code == -1) {
+            statusMessage = 'Still working';
+        }
         return (
             <div className="url">
                 <a href="#"> {this.props.name}</a>
-                <p>Status {this.props.status.code}</p>
+                <p>Status: {status[this.props.status.code]}</p>
                 <p>Batch {this.props.batch}</p>
             </div>
         );
@@ -124,6 +135,6 @@ var UrlForm = React.createClass({
 });
 
 ReactDOM.render(
-    <UrlBox url="api/urls" interval={2000} />,
+    <UrlBox url="api/urls" interval={1500} />,
     document.getElementById('content')
 );
