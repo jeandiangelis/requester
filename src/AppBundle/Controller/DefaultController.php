@@ -66,17 +66,30 @@ class DefaultController extends Controller
             $nextBatch = $lastBatchUrl->getBatch() + 1;
         }
 
-        $statusRequest = $doctrine
-            ->getRepository(RequestStatus::class)
-            ->findOneBy(['code' => -1]);
-
         $entities = [];
         foreach ($urls as $url) {
-            $entities[] = $entity = new Url($url, $nextBatch, $statusRequest);
+            $entities[$url] = $entity = new Url($url, $nextBatch, -1);
             $doctrine->getEntityManager()->persist($entity);
         }
 
         $doctrine->getEntityManager()->flush();
+
+        $client = new Client();
+        /** @var Url $entity */
+        foreach ($entities as $entity) {
+            $promise = $client->getAsync($entity->getName());
+
+            $promise->then(
+                function (ResponseInterface $res) use ($entity) {
+                    $entity->setStatus($res->getStatusCode());
+                },
+                function (RequestException $e) use ($entity) {
+                    $entity->setStatus($e->getCode());
+                }
+            );
+        }
+
+
 
         return new Response();
     }

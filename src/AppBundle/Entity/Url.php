@@ -43,7 +43,7 @@ class Url
     /**
      * @var RequestStatus
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\RequestStatus")
+     * @ORM\Column(name="status", type="integer")
      */
     private $status;
 
@@ -51,9 +51,9 @@ class Url
      * Url constructor.
      * @param string $name
      * @param int $batch
-     * @param RequestStatus $statusCode
+     * @param $statusCode
      */
-    public function __construct($name, $batch, RequestStatus $statusCode)
+    public function __construct($name, $batch, $statusCode)
     {
         $this->name = $name;
         $this->batch = $batch;
@@ -91,9 +91,7 @@ class Url
     }
 
     /**
-     * Get status
-     *
-     * @return RequestStatus
+     * @return int
      */
     public function getStatus()
     {
@@ -101,7 +99,7 @@ class Url
     }
 
     /**
-     * @param RequestStatus $status
+     * @param int $status
      */
     public function setStatus($status)
     {
