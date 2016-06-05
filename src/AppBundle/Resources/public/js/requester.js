@@ -14,7 +14,20 @@ var UrlBox = React.createClass({
     },
     
     handleUrlsSubmit: function(url) {
+        var urls = this.state.data;
+        var newUrls = url.urls.split("\n");
 
+        for (var i = 0; i < newUrls.length; i++) {
+            newUrls[i] = {
+                'name': newUrls[i],
+                'id': Date.now(),
+                'status': -1
+            };
+        }
+
+        var state = urls.concat(newUrls);
+
+        this.setState({data: state});
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -59,13 +72,10 @@ var Url = React.createClass({
             '500': 'Server error',
         };
 
-        if (this.props.status.code == -1) {
-            statusMessage = 'Still working';
-        }
         return (
             <div className="url">
                 <a href="#"> {this.props.name}</a>
-                <p>Status: {status[this.props.status.code]}</p>
+                <p>Status: {status[this.props.status]}</p>
                 <p>Batch {this.props.batch}</p>
             </div>
         );
@@ -135,6 +145,6 @@ var UrlForm = React.createClass({
 });
 
 ReactDOM.render(
-    <UrlBox url="api/urls" interval={1500} />,
+    <UrlBox url="api/urls" interval={1000} />,
     document.getElementById('content')
 );

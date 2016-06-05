@@ -6,8 +6,6 @@ use AppBundle\Entity\RequestStatus;
 use AppBundle\Entity\Url;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\TransferStats;
 use Psr\Http\Message\ResponseInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -15,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Process\Process;
 
 class DefaultController extends Controller
 {
@@ -24,6 +21,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $a = $this->getDoctrine()->getRepository(Url::class)->findAll();
+        foreach ($a as $b) {
+            $this->getDoctrine()->getManager()->remove($b);
+        }
+
+        $this->getDoctrine()->getManager()->flush();
         return $this->render("AppBundle:default:index.html.twig");
     }
 
@@ -80,16 +83,20 @@ class DefaultController extends Controller
             $promise = $client->getAsync($entity->getName());
 
             $promise->then(
-                function (ResponseInterface $res) use ($entity) {
+                function (ResponseInterface $res) use ($doctrine, $entity) {
                     $entity->setStatus($res->getStatusCode());
+                    $doctrine->getManager()->persist($entity);
+                    $doctrine->getEntityManager()->flush();
                 },
-                function (RequestException $e) use ($entity) {
+                function (RequestException $e) use ($doctrine, $entity) {
                     $entity->setStatus($e->getCode());
+                    $doctrine->getManager()->persist($entity);
+                    $doctrine->getEntityManager()->flush();
                 }
             );
         }
 
-
+        $doctrine->getEntityManager()->flush();
 
         return new Response();
     }
