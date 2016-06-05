@@ -14,20 +14,6 @@ var UrlBox = React.createClass({
     },
     
     handleUrlsSubmit: function(url) {
-        var urls = this.state.data;
-        var newUrls = url.urls.split("\n");
-
-        for (var i = 0; i < newUrls.length; i++) {
-            newUrls[i] = {
-                'name': newUrls[i],
-                'id': Date.now(),
-                'status': -1
-            };
-        }
-
-        var state = urls.concat(newUrls);
-
-        this.setState({data: state});
         $.ajax({
             url: this.props.url,
             dataType: 'json',
