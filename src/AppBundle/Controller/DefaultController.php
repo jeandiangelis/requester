@@ -2,11 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\RequestStatus;
 use AppBundle\Entity\Url;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use Psr\Http\Message\ResponseInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -88,25 +84,6 @@ class DefaultController extends Controller
         }
 
         $doctrine->getEntityManager()->flush();
-
-        $client = new Client();
-        /** @var Url $entity */
-        foreach ($entities as $entity) {
-            $promise = $client->getAsync($entity->getName());
-
-            $promise->then(
-                function (ResponseInterface $res) use ($doctrine, $entity) {
-                    $entity->setStatus($res->getStatusCode());
-                    $doctrine->getManager()->persist($entity);
-                    $doctrine->getEntityManager()->flush();
-                },
-                function (RequestException $e) use ($doctrine, $entity) {
-                    $entity->setStatus($e->getCode());
-                    $doctrine->getManager()->persist($entity);
-                    $doctrine->getEntityManager()->flush();
-                }
-            );
-        }
 
         return new Response();
     }
