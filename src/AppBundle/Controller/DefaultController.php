@@ -80,10 +80,10 @@ class DefaultController extends Controller
         $entities = [];
         foreach ($urls as $url) {
             $entities[$url] = $entity = new Url($url, $nextBatch, -1);
-            $doctrine->getEntityManager()->persist($entity);
+            $doctrine->getManager()->persist($entity);
         }
 
-        $doctrine->getEntityManager()->flush();
+        $doctrine->getManager()->flush();
 
         return new Response();
     }

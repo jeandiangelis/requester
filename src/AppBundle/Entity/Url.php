@@ -41,11 +41,34 @@ class Url
     private $batch;
 
     /**
-     * @var RequestStatus
+     * @var int
      *
      * @ORM\Column(name="status", type="integer")
      */
     private $status;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="launched", type="boolean", nullable=true)
+     */
+    private $launched;
+
+    /**
+     * @return boolean
+     */
+    public function isLaunched()
+    {
+        return $this->launched;
+    }
+
+    /**
+     * @param boolean $launched
+     */
+    public function setLaunched($launched)
+    {
+        $this->launched = $launched;
+    }
 
     /**
      * Url constructor.
