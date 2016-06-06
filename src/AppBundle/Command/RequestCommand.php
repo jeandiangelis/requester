@@ -3,10 +3,14 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Url;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class RequestCommand
@@ -28,22 +32,33 @@ class RequestCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $id = $input->getArgument(static::URL_ID);
-        
         $doctrine = $this
             ->getContainer()
             ->get('doctrine')
         ;
 
-        $em = $doctrine->getEntityManager();
-        $repo = $doctrine->getRepository(Url::class);
-        $url = $repo->find($id);
+        $id     = $input->getArgument(static::URL_ID);
+        $em     = $doctrine->getEntityManager();
+        $repo   = $doctrine->getRepository(Url::class);
+        $url    = $repo->find($id);
+        $client = new Client();
 
-        
+        $promise = $client->requestAsync(Request::METHOD_GET, $url->getName(), [
+        ]);
 
-        $url->setLaunched(true);
-
-        $em->persist($url);
-        $em->flush();
+        $promise->then(
+            function (ResponseInterface $response) use ($url, $em) {
+                $url->setStatus($response->getStatusCode());
+                echo $response->getBody();
+                $em->persist($url);
+                $em->flush();
+            },
+            function (RequestException $exception) use ($url, $em) {
+                $url->setStatus($exception->getCode());
+                echo $exception->getMessage();
+                $em->persist($url);
+                $em->flush();
+            }
+        );
     }
 }

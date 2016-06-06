@@ -40,7 +40,7 @@ class DefaultController extends Controller
         echo $time;
         sleep($time);
 
-        return new Response('troxa');
+        return new Response('troxa', 200);
     }
 
     /**
