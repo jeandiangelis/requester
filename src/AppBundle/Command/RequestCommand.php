@@ -39,6 +39,8 @@ class RequestCommand extends ContainerAwareCommand
         $repo = $doctrine->getRepository(Url::class);
         $url = $repo->find($id);
 
+        
+
         $url->setLaunched(true);
 
         $em->persist($url);

@@ -9,9 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Process\Process;
 
 class DefaultController extends Controller
 {
+    private function getId()
+    {
+        return 177;
+    }
     /**
      * @Route("/", name="homepage")
      */
@@ -84,6 +89,14 @@ class DefaultController extends Controller
         }
 
         $doctrine->getManager()->flush();
+
+        /** @var Url $url */
+        foreach ($entities as $url) {
+            $command = "php ../bin/console launch:request {$url->getId()}";
+
+            $process = new Process($command);
+            $process->start();
+        }
 
         return new Response();
     }
